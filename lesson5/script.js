@@ -4,6 +4,7 @@ function main() {
     var input = document.getElementById('message');
     var button = document.getElementById('submit');
     var del = document.getElementById('delete');
+    var arrp = [];
 
     function handleSubmit(evt) {
         var val = input.value;
@@ -18,12 +19,20 @@ function main() {
 
     }
     del.onclick = deleteMessages;
+    del.onclick = deleteTags;
 
     function handleMessage(msg) {
         var p = document.createElement('p');
+        var att = document.createAttribute("class");
+        
+        arrp.push(p);
+        att.value = "democlass";
+        p.setAttributeNode(att);
+        document.getElementById("pdiv").appendChild(p);
         p.innerText = msg;
-        chatDiv.appendChild(p);
+        arrp.appendChild(p);
         input.value = "";
+        
     }
 
     socket.on('display message', handleMessage);
@@ -31,6 +40,15 @@ function main() {
 
 
     function deleteTags(){
+        console.log("deleted");
+        var chatDiv = document.getElementById("pdiv");
+        var fc = chatDiv.firstChild;
+        console.log(fc);
+        while (fc) {
+            chatDiv.removeChild(fc);
+            fc = chatDiv.firstChild;
+            
+        }
         
     }
 } // main closing bracket
